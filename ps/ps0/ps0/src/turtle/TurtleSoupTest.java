@@ -26,8 +26,10 @@ public class TurtleSoupTest {
     @Test
     public void calculateRegularPolygonAngleTest() {
         assertEquals(60.0, TurtleSoup.calculateRegularPolygonAngle(3), 0.001);
-        assertEquals(128.57, TurtleSoup.calculateRegularPolygonAngle(7), 0.01);
+        assertEquals(90.0, TurtleSoup.calculateRegularPolygonAngle(4), 0.001);
         assertEquals(108.0, TurtleSoup.calculateRegularPolygonAngle(5), 0.001);
+        assertEquals(120.0, TurtleSoup.calculateRegularPolygonAngle(6), 0.001);
+        assertEquals(128.57, TurtleSoup.calculateRegularPolygonAngle(7), 0.01);
     }
 
     /**
@@ -36,9 +38,10 @@ public class TurtleSoupTest {
     @Test
     public void calculatePolygonSidesFromAngleTest() {
         assertEquals(3, TurtleSoup.calculatePolygonSidesFromAngle(60.0));
-        assertEquals(7, TurtleSoup.calculatePolygonSidesFromAngle(128.57));
+        assertEquals(4, TurtleSoup.calculatePolygonSidesFromAngle(90.0));
         assertEquals(5, TurtleSoup.calculatePolygonSidesFromAngle(108.0));
-
+        assertEquals(6, TurtleSoup.calculatePolygonSidesFromAngle(120.0));
+        assertEquals(7, TurtleSoup.calculatePolygonSidesFromAngle(128.57));
     }
 
     /**
@@ -56,16 +59,16 @@ public class TurtleSoupTest {
      */
     @Test
     public void calculateHeadingsTest() {
-        List<Integer> xpoints = new ArrayList<>();
-        List<Integer> ypoints = new ArrayList<>();
-        xpoints.add(0);
-        xpoints.add(1);
-        xpoints.add(1);
-        ypoints.add(0);
-        ypoints.add(1);
-        ypoints.add(2);
+        List<Integer> xPoints = new ArrayList<>();
+        List<Integer> yPoints = new ArrayList<>();
+        xPoints.add(0);
+        xPoints.add(1);
+        xPoints.add(1);
+        yPoints.add(0);
+        yPoints.add(1);
+        yPoints.add(2);
 
-        List<Double> result = TurtleSoup.calculateHeadings(xpoints, ypoints);
+        List<Double> result = TurtleSoup.calculateHeadings(xPoints, yPoints);
         assertEquals(2, result.size());
         assertEquals(45.0, result.get(0), 0.001);
         assertEquals(315.0, result.get(1), 0.001);

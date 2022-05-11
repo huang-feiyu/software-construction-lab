@@ -8,6 +8,10 @@
 
 ## Part I
 
+[MIT Collaboration and Sharing](https://ocw.mit.edu/ans7870/6/6.005/s16/general/collaboration.html)
+
 There's nothing to say. It is easy.
 
-[MIT Collaboration and Sharing](https://ocw.mit.edu/ans7870/6/6.005/s16/general/collaboration.html)
+## Part II
+
+Math problems, nothing to say here.
