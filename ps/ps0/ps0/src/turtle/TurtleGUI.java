@@ -33,6 +33,7 @@ public class TurtleGUI extends JFrame {
 
     private static final Color CANVAS_BG_COLOR = Color.WHITE;
     private static final Map<PenColor, Color> PEN_COLORS = new EnumMap<>(PenColor.class);
+
     static {
         PEN_COLORS.put(PenColor.BLACK, Color.BLACK);
         PEN_COLORS.put(PenColor.GRAY, Color.GRAY);
@@ -71,9 +72,9 @@ public class TurtleGUI extends JFrame {
 
     /**
      * Construct a new turtle graphics window.
-     * 
-     * @param actionList sequence of actions to render
-     * @param canvasWidth canvas width in pixels
+     *
+     * @param actionList   sequence of actions to render
+     * @param canvasWidth  canvas width in pixels
      * @param canvasHeight canvas height in pixels
      */
     public TurtleGUI(List<Action> actionList, int canvasWidth, int canvasHeight) {
@@ -105,9 +106,9 @@ public class TurtleGUI extends JFrame {
         stoppedAnimation(); // initialize interface elements
 
         runButton.addActionListener(new ActionListener() {
-            
+
             private AnimationThread animationThread;
-            
+
             public void actionPerformed(ActionEvent e) {
                 if (!isRunning) {
                     runButton.setText("Stop");
@@ -121,17 +122,17 @@ public class TurtleGUI extends JFrame {
         });
 
         layout.setHorizontalGroup(layout.createParallelGroup()
-                .addComponent(drawLabel)
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(runButton)
-                        .addComponent(currentActionLabel)
-                        .addComponent(currentAction)));
+            .addComponent(drawLabel)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(runButton)
+                .addComponent(currentActionLabel)
+                .addComponent(currentAction)));
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .addComponent(drawLabel)
-                .addGroup(layout.createParallelGroup(Alignment.CENTER)
-                        .addComponent(runButton)
-                        .addComponent(currentActionLabel)
-                        .addComponent(currentAction)));
+            .addComponent(drawLabel)
+            .addGroup(layout.createParallelGroup(Alignment.CENTER)
+                .addComponent(runButton)
+                .addComponent(currentActionLabel)
+                .addComponent(currentAction)));
 
         pack();
     }

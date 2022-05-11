@@ -5,7 +5,7 @@ package turtle;
 
 /**
  * Enumeration of turtle pen colors.
- * 
+ * <p>
  * You may not modify this enumeration.
  */
 public enum PenColor {

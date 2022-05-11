@@ -40,8 +40,8 @@ public class DrawableTurtle implements Turtle {
     }
 
     public void forward(int steps) {
-        double newX = currentPosition.x() + Math.cos(Math.toRadians(DEGREES_TO_VERTICAL - currentHeading)) * (double)steps;
-        double newY = currentPosition.y() + Math.sin(Math.toRadians(DEGREES_TO_VERTICAL - currentHeading)) * (double)steps;
+        double newX = currentPosition.x() + Math.cos(Math.toRadians(DEGREES_TO_VERTICAL - currentHeading)) * (double) steps;
+        double newY = currentPosition.y() + Math.sin(Math.toRadians(DEGREES_TO_VERTICAL - currentHeading)) * (double) steps;
 
         LineSegment lineSeg = new LineSegment(currentPosition.x(), currentPosition.y(), newX, newY, currentColor);
         this.lines.add(lineSeg);
@@ -68,6 +68,5 @@ public class DrawableTurtle implements Turtle {
         SwingUtilities.invokeLater(() -> {
             (new TurtleGUI(actionList, CANVAS_WIDTH, CANVAS_HEIGHT)).setVisible(true);
         });
-        return;
     }
 }

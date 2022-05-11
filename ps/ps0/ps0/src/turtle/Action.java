@@ -21,9 +21,10 @@ public class Action {
 
     /**
      * Represent a new action.
-     * @param type type of action
+     *
+     * @param type          type of action
      * @param displayString text that describes the action
-     * @param lineSeg line segment associated with the action, may be null
+     * @param lineSeg       line segment associated with the action, may be null
      */
     public Action(ActionType type, String displayString, LineSegment lineSeg) {
         this.type = type;

@@ -13,6 +13,7 @@ public class Point {
 
     /**
      * Construct a point at the given coordinates.
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      */
