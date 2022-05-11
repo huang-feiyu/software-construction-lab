@@ -15,7 +15,11 @@ public class TurtleSoup {
      * @param sideLength length of each side
      */
     public static void drawSquare(Turtle turtle, int sideLength) {
-        throw new RuntimeException("implement me!");
+        double rightAngle = 90.0;
+        for (int i = 0; i < 4; i++) {
+            turtle.turn(rightAngle);
+            turtle.forward(sideLength);
+        }
     }
 
     /**
@@ -119,7 +123,7 @@ public class TurtleSoup {
      *
      * @param args unused
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DrawableTurtle turtle = new DrawableTurtle();
 
         drawSquare(turtle, 40);
