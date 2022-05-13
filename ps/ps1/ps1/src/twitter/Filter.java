@@ -3,6 +3,8 @@
  */
 package twitter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,7 +27,13 @@ public class Filter {
      * in the same order as in the input list.
      */
     public static List<Tweet> writtenBy(List<Tweet> tweets, String username) {
-        throw new RuntimeException("not implemented");
+        List<Tweet> ans = new ArrayList<>();
+        for (Tweet tweet : tweets) {
+            if (username.equals(tweet.getAuthor())) {
+                ans.add(tweet);
+            }
+        }
+        return ans;
     }
 
     /**
@@ -37,7 +45,14 @@ public class Filter {
      * in the same order as in the input list.
      */
     public static List<Tweet> inTimespan(List<Tweet> tweets, Timespan timespan) {
-        throw new RuntimeException("not implemented");
+        List<Tweet> ans = new ArrayList<>();
+        for (Tweet tweet : tweets) {
+            if (tweet.getTimestamp().isAfter(timespan.getStart()) &&
+                tweet.getTimestamp().isBefore(timespan.getEnd())) {
+                ans.add(tweet);
+            }
+        }
+        return ans;
     }
 
     /**
@@ -54,7 +69,21 @@ public class Filter {
      * same order as in the input list.
      */
     public static List<Tweet> containing(List<Tweet> tweets, List<String> words) {
-        throw new RuntimeException("not implemented");
+        List<Tweet> tweetList = new ArrayList<>();
+
+        for (Tweet tweet : tweets) {
+            // split the tweet text into a list of words
+            String text = tweet.getText().toLowerCase().replaceAll("[^\\w\\s]", "");
+            List<String> textList = new ArrayList<>(Arrays.asList(text.split(" ")));
+            // if word is in the tweet text, add to result
+            for (String word : words) {
+                if (textList.contains(word.toLowerCase())) {
+                    tweetList.add(tweet);
+                    break;
+                }
+            }
+        }
+        return tweetList;
     }
 
 }

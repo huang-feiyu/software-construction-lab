@@ -24,7 +24,7 @@ public class ExtractTest {
      *     tweets.size = 2
      *     tweets.size > 2
      *
-     * 2. getMentionedUsers(List<Tweet> tweets)
+     * 2. getMentionedUsers(List<Tweet> tweets) -> mentioned
      * cover the cartesian product of these partitions: (except 0,1)
      *   partition on tweets.size:
      *     tweets.size = 0

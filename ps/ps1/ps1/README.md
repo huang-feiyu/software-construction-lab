@@ -6,6 +6,8 @@
 
 [TOC]
 
+(There is some typos in my comments. After all, I am not good at English.)
+
 ## Overview
 
 * Test-First Programming:
@@ -53,3 +55,9 @@ private static long getEpochDiffOfTweets(Tweet tweet1, Tweet tweet2) {
     return Math.abs(tweet1.getTimestamp().getEpochSecond() - tweet2.getTimestamp().getEpochSecond());
 }
 ```
+
+## Problem 2
+
+> Filtering lists of tweets
+
+The test for `containing()` is missed, because it's too much.
