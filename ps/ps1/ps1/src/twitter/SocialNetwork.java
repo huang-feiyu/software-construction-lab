@@ -3,9 +3,8 @@
  */
 package twitter;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.Instant;
+import java.util.*;
 
 /**
  * SocialNetwork provides methods that operate on a social network.
@@ -34,13 +33,20 @@ public class SocialNetwork {
      * if and only if there is evidence for it in the given list of
      * tweets.
      * One kind of evidence that Ernie follows Bert is if Ernie
-     * @-mentions Bert in a tweet. This must be implemented. Other kinds
+     * \@-mentions Bert in a tweet. This must be implemented. Other kinds
      * of evidence may be used at the implementor's discretion.
      * All the Twitter usernames in the returned social network must be
      * either authors or @-mentions in the list of tweets.
      */
     public static Map<String, Set<String>> guessFollowsGraph(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+        Map<String, Set<String>> graph = new HashMap<>();
+        for (Tweet tweet : tweets) {
+            if (!graph.containsKey(tweet.getAuthor())) {
+                graph.put(tweet.getAuthor(), new HashSet<>());
+            }
+            graph.get(tweet.getAuthor()).addAll(Extract.getMentionedUsers(Collections.singletonList(tweet)));
+        }
+        return graph;
     }
 
     /**
@@ -52,7 +58,39 @@ public class SocialNetwork {
      * descending order of follower count.
      */
     public static List<String> influencers(Map<String, Set<String>> followsGraph) {
-        throw new RuntimeException("not implemented");
+        List<String> ans = new ArrayList<>();
+        Map<String, Integer> influencers = new HashMap<>();
+
+        // add followed users to map and count their followers
+        for (Set<String> follows : followsGraph.values()) {
+            for (String followedUser : follows) {
+                followedUser = followedUser.toLowerCase();
+                if (influencers.containsKey(followedUser)) {
+                    influencers.put(followedUser, influencers.get(followedUser) + 1);
+                } else {
+                    influencers.put(followedUser, 0);
+                }
+            }
+        }
+        // add remaining users
+        for (String username : followsGraph.keySet()) {
+            username = username.toLowerCase();
+            if (!influencers.containsKey(username)) {
+                influencers.put(username.toLowerCase(), 0);
+            }
+        }
+        // sort users by followers
+        while (!influencers.isEmpty()) {
+            int topFollowers = Collections.max(influencers.values());
+            for (String username : influencers.keySet()) {
+                if (influencers.get(username).equals(topFollowers)) {
+                    ans.add(username);
+                    influencers.remove(username);
+                    break;
+                }
+            }
+        }
+        return ans;
     }
 
 }

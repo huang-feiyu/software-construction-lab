@@ -60,4 +60,14 @@ private static long getEpochDiffOfTweets(Tweet tweet1, Tweet tweet2) {
 
 > Filtering lists of tweets
 
-The test for `containing()` is missed, because it's too much.
+The test for `containing()` is missed, because it's too many.
+
+## Problem 3
+
+> Inferring a social network
+
+I just write part of the tests.
+
+## Problem 4
+
+It's boring, and I'm tired, so skip this problem.
