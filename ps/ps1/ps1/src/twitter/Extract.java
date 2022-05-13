@@ -3,8 +3,12 @@
  */
 package twitter;
 
+import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Extract consists of methods that extract information from a list of tweets.
@@ -23,7 +27,37 @@ public class Extract {
      * every tweet in the list.
      */
     public static Timespan getTimespan(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+        if (tweets.isEmpty() || tweets.size() == 1) {
+            return null;
+        }
+        long leastNanoDiff = Long.MAX_VALUE;
+        Timespan minTimespan = getTimespanOfTweets(tweets.get(0), tweets.get(1));
+        for (int i = 0; i < tweets.size(); i++) {
+            for (int j = i + 1; j < tweets.size(); j++) {
+                long tmpNanoDiff = getEpochDiffOfTweets(tweets.get(i), tweets.get(j));
+                if (leastNanoDiff > tmpNanoDiff) {
+                    leastNanoDiff = tmpNanoDiff;
+                    minTimespan = getTimespanOfTweets(tweets.get(i), tweets.get(j));
+                }
+            }
+        }
+        return minTimespan;
+    }
+
+    /* Get the time period of two tweets. */
+    private static Timespan getTimespanOfTweets(Tweet tweet1, Tweet tweet2) {
+        Instant instant1 = tweet1.getTimestamp();
+        Instant instant2 = tweet2.getTimestamp();
+        if (instant1.isAfter(instant2)) {
+            return new Timespan(instant2, instant1);
+        } else {
+            return new Timespan(instant1, instant2);
+        }
+    }
+
+    /* Get the abs(nano) diff of two tweets. */
+    private static long getEpochDiffOfTweets(Tweet tweet1, Tweet tweet2) {
+        return Math.abs(tweet1.getTimestamp().getEpochSecond() - tweet2.getTimestamp().getEpochSecond());
     }
 
     /**
@@ -41,7 +75,18 @@ public class Extract {
      * include a username at most once.
      */
     public static Set<String> getMentionedUsers(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+        Set<String> mentioned = new HashSet<>();
+
+        for (Tweet tweet : tweets) {
+            // from stackoverflow: https://stackoverflow.com/questions/40365596/extracting-twitter-username-from-a-given-text-java-regex
+            Matcher m = Pattern.compile("(?<=@)([\\w-]+)").matcher(tweet.getText()); // Analyze text with a regex that will capture usernames preceded by @
+            while (m.find()) {
+                // Stores all username (without @)
+                mentioned.add(m.group(1));
+            }
+        }
+
+        return mentioned;
     }
 
 }
