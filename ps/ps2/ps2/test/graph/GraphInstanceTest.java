@@ -5,9 +5,7 @@ package graph;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -107,12 +105,16 @@ public abstract class GraphInstanceTest {
         Set<String> ansSet = new HashSet<>();
         ansSet.add("a");
         ansSet.add("b");
+        Map<String, Integer> map1 = new HashMap<>();
+        map1.put("a", 2);
+        Map<String, Integer> map2 = new HashMap<>();
+        map2.put("b", 2);
         // set: cover 1-1
         Graph<String> stringGraph = emptyInstance();
         assertEquals(0, stringGraph.set("a", "b", 2));
         assertEquals(ansSet, stringGraph.vertices());
-        assertEquals(Collections.singleton("a"), stringGraph.sources("b"));
-        assertEquals(Collections.singleton("b"), stringGraph.targets("a"));
+        assertEquals(map1, stringGraph.sources("b"));
+        assertEquals(map2, stringGraph.targets("a"));
     }
 
     @Test
@@ -128,7 +130,8 @@ public abstract class GraphInstanceTest {
         // set: cover 2-1
         Graph<String> stringGraph = emptyInstance();
         assertEquals(0, stringGraph.set("a", "b", 0));
-        assertEquals(Collections.emptySet(), stringGraph.vertices());
+        assertEquals(Collections.emptyMap(), stringGraph.sources("b"));
+        assertEquals(Collections.emptyMap(), stringGraph.targets("a"));
     }
 
     @Test
@@ -137,7 +140,8 @@ public abstract class GraphInstanceTest {
         Graph<String> stringGraph = emptyInstance();
         stringGraph.set("a", "b", 2);
         assertEquals(2, stringGraph.set("a", "b", 0));
-        assertEquals(Collections.emptySet(), stringGraph.vertices());
+        assertEquals(Collections.emptyMap(), stringGraph.sources("a"));
+        assertEquals(Collections.emptyMap(), stringGraph.targets("b"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -149,13 +153,16 @@ public abstract class GraphInstanceTest {
 
     @Test
     public void testRemoveInvalidVertex() {
+        Set<String> ansSet = new HashSet<>();
+        ansSet.add("a");
+        ansSet.add("b");
         // remove: cover 1
         Graph<String> stringGraph = emptyInstance();
         stringGraph.set("a", "b", 2);
         assertFalse(stringGraph.remove(""));
-        assertEquals(Collections.singleton("a"), stringGraph.vertices());
+        assertEquals(ansSet, stringGraph.vertices());
         assertFalse(stringGraph.remove(null));
-        assertEquals(Collections.singleton("a"), stringGraph.vertices());
+        assertEquals(ansSet, stringGraph.vertices());
     }
 
     @Test
@@ -199,15 +206,17 @@ public abstract class GraphInstanceTest {
         // sources: cover 1
         Graph<String> stringGraph = emptyInstance();
         stringGraph.set("a", "b", 2);
-        assertEquals(Collections.emptySet(), stringGraph.sources("a"));
+        assertEquals(Collections.emptyMap(), stringGraph.sources("a"));
     }
 
     @Test
     public void testSourcesNotEmpty() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 2);
         // sources: cover 2
         Graph<String> stringGraph = emptyInstance();
         stringGraph.set("a", "b", 2);
-        assertEquals(Collections.singleton("b"), stringGraph.sources("b"));
+        assertEquals(map, stringGraph.sources("b"));
     }
 
     @Test
@@ -215,15 +224,17 @@ public abstract class GraphInstanceTest {
         // targets: cover 1
         Graph<String> stringGraph = emptyInstance();
         stringGraph.set("a", "b", 2);
-        assertEquals(Collections.emptySet(), stringGraph.targets("b"));
+        assertEquals(Collections.emptyMap(), stringGraph.targets("b"));
     }
 
     @Test
     public void testTargetsNotEmpty() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 2);
         // targets: cover 2
         Graph<String> stringGraph = emptyInstance();
-        stringGraph.set("a", "b", 2);
-        assertEquals(Collections.singleton("a"), stringGraph.targets("a"));
+        stringGraph.set("b", "a", 2);
+        assertEquals(map, stringGraph.targets("b"));
     }
 
 }

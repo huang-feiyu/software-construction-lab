@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.*;
+
 /**
  * Tests for ConcreteEdgesGraph.
  * <p>
@@ -15,7 +17,7 @@ import org.junit.Test;
  * <p>
  * Tests against the Graph spec should be in GraphInstanceTest.
  */
-public class ConcreteEdgesGraphTest extends GraphInstanceTest {
+public class ConcreteEdgesGraphTest extends GraphInstanceTest{
 
     /*
      * Provide a ConcreteEdgesGraph for tests in GraphInstanceTest.
@@ -30,17 +32,23 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
      */
 
     // Testing strategy for ConcreteEdgesGraph.toString()
-    //   TODO
+    //   1. empty graph
+    //   2. non-empty graph
 
-    // TODO tests for ConcreteEdgesGraph.toString()
+    @Test
+    public void testToStringEmptyGraph() {
+        assertEquals("", emptyInstance().toString());
+    }
+
+    @Test
+    public void testToStringNonEmptyGraph() {
+        Graph<String> graph = emptyInstance();
+        graph.set("a", "b", 2);
+        assertEquals("a: {b=2}\nb: {}\n", graph.toString());
+    }
 
     /*
-     * Testing Edge...
+     * <s>Testing Edge...</s> There is no need to test Edge.
      */
-
-    // Testing strategy for Edge
-    //   TODO
-
-    // TODO tests for operations of Edge
 
 }
