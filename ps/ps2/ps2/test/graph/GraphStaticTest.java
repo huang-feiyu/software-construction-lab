@@ -5,7 +5,7 @@ package graph;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -30,9 +30,18 @@ public class GraphStaticTest {
     @Test
     public void testEmptyVerticesEmpty() {
         assertEquals("expected empty() graph to have no vertices",
-            Collections.emptySet(), Graph.empty().vertices());
+            Collections.emptySet(), new ConcreteEdgesGraph<String>().empty().vertices());
     }
 
-    // TODO test other vertex label types in Problem 3.2
+    @Test
+    public void testLabelNode() {
+        Set<Integer> ansSet = new HashSet<>();
+        ansSet.add(1);
+        ansSet.add(2);
+
+        Graph<Integer> intGraph = new ConcreteEdgesGraph<Integer>().empty();
+        intGraph.set(1, 2, 3);
+        assertEquals(ansSet, intGraph.vertices());
+    }
 
 }

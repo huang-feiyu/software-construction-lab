@@ -13,10 +13,16 @@
 
 ## Problem 2
 
-> implement weighted directed graphs with `String` labels — twice
+> implement weighted directed graphs with `String` labels
 
 Document *Abstract Function* and *Representation invariant* (and how to avoid RI
 exposure).
 
 I only implemented `ConcreteEdgesGraph`, because both are the same in my mind.
 (When I use my tests to test Implementation, I found that most bugs are in tests...)
+
+## Problem 3
+
+> implement generic `Graph<L>`
+
+没什么可说的.

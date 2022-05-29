@@ -24,7 +24,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest{
      */
     @Override
     public Graph<String> emptyInstance() {
-        return new ConcreteEdgesGraph();
+        return new ConcreteEdgesGraph<>();
     }
 
     /*
