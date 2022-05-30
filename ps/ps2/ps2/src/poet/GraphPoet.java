@@ -83,6 +83,7 @@ public class GraphPoet {
         throw new RuntimeException("not implemented");
     }
 
-    // TODO toString()
-
+    public String toString() {
+        return graph.toString();
+    }
 }

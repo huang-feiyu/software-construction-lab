@@ -25,4 +25,10 @@ I only implemented `ConcreteEdgesGraph`, because both are the same in my mind.
 
 > implement generic `Graph<L>`
 
-没什么可说的.
+Nothing to say here.
+
+## Problem 4
+
+> implement `GraphPoet`:<br/>
+> how a poet is initialized with a corpus and then, given an input, uses a word
+> affinity graph defined by that corpus to transform the input poetically
