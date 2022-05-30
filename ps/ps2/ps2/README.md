@@ -32,3 +32,5 @@ Nothing to say here.
 > implement `GraphPoet`:<br/>
 > how a poet is initialized with a corpus and then, given an input, uses a word
 > affinity graph defined by that corpus to transform the input poetically
+
+我忽略了标点作为分隔符的处理以及大小写的处理, 大体是没有错误的.

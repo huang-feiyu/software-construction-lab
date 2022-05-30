@@ -5,7 +5,9 @@ package poet;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
+import graph.ConcreteEdgesGraph;
 import graph.Graph;
 
 /**
@@ -52,14 +54,14 @@ import graph.Graph;
  */
 public class GraphPoet {
 
-    private final Graph<String> graph = Graph.empty();
+    private final Graph<String> graph = new ConcreteEdgesGraph<String>().empty();
 
     // Abstraction function:
-    //   TODO
+    //   AF(corpus) = a graphPoet who can generate a poem with an input
     // Representation invariant:
-    //   TODO
+    //   a non-empty graph
     // Safety from rep exposure:
-    //   TODO
+    //   graph is private, and can only be modified by its own constructor.
 
     /**
      * Create a new poet with the graph from corpus (as described above).
@@ -68,10 +70,26 @@ public class GraphPoet {
      * @throws IOException if the corpus file cannot be found or read
      */
     public GraphPoet(File corpus) throws IOException {
-        throw new RuntimeException("not implemented");
+        if (corpus == null) {
+            throw new IllegalArgumentException();
+        }
+        Scanner reader = new Scanner(corpus);
+        ArrayList<String> words = new ArrayList<>();
+        while (reader.hasNext()) {
+            words.addAll(Arrays.asList(reader.nextLine().toLowerCase().split(" ")));
+        }
+        for (int i = 0; i < words.size() - 1; i++) {
+            graph.set(words.get(i), words.get(i + 1), 1);
+        }
+        if (graph.vertices().equals(Collections.emptySet())) {
+            throw new IllegalArgumentException();
+        }
+        checkRep();
     }
 
-    // TODO checkRep
+    private void checkRep() {
+        assert !graph.vertices().equals(Collections.emptySet());
+    }
 
     /**
      * Generate a poem.
@@ -80,7 +98,37 @@ public class GraphPoet {
      * @return poem (as described above)
      */
     public String poem(String input) {
-        throw new RuntimeException("not implemented");
+        if (input == null || input.equals("")) {
+            throw new IllegalArgumentException();
+        }
+        String[] inputWords = input.toLowerCase().split(" ");
+        for (int i = 0; i < inputWords.length; i++) {
+            System.out.println(inputWords[i]);
+        }
+        ArrayList<String> poemWords = new ArrayList<>();
+        for (int i = 0; i < inputWords.length - 1; i++) {
+            poemWords.add(inputWords[i]);
+            Map<String, Integer> candidates = graph.targets(inputWords[i]);
+            String bridge = null;
+            int maxWeight = 0;
+            for (String candidate : candidates.keySet()) {
+                if (graph.targets(candidate).containsKey(inputWords[i + 1]) &&
+                    maxWeight < graph.targets(candidate).get(inputWords[i + 1]) + candidates.get(candidate)) {
+                    bridge = candidate;
+                    maxWeight = graph.targets(candidate).get(inputWords[i + 1]) + candidates.get(candidate);
+                }
+            }
+            if (maxWeight != 0 && bridge != null) {
+                poemWords.add(bridge);
+            }
+        }
+        poemWords.add(inputWords[inputWords.length - 1]);
+        StringBuilder ans;
+        ans = new StringBuilder(poemWords.get(0));
+        for (int i = 1; i < poemWords.size(); i++) {
+            ans.append(" ").append(poemWords.get(i));
+        }
+        return ans.toString();
     }
 
     public String toString() {

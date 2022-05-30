@@ -40,10 +40,19 @@ public class GraphPoetTest {
         // cover 2
         File nonEmptyFile = new File("./test/poet/test-corpus.txt");
         GraphPoet poet = new GraphPoet(nonEmptyFile);
-        assertEquals("to be filled", poet.toString());
+        assertEquals("new: {worlds=1, civilizations=1, life=1}\n" +
+            "worlds: {to=1}\n" +
+            "explore: {strange=1}\n" +
+            "and: {new=1}\n" +
+            "to: {explore=1, seek=1}\n" +
+            "civilizations: {}\n" +
+            "seek: {out=1}\n" +
+            "strange: {new=1}\n" +
+            "life: {and=1}\n" +
+            "out: {new=1}\n", poet.toString());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testPoemByEmptyInput() throws IOException {
         // cover 1
         GraphPoet poet = new GraphPoet(new File("./test/poet/test-corpus.txt"));
@@ -53,8 +62,8 @@ public class GraphPoetTest {
     @Test
     public void testPoemByNonEmptyInput() throws IOException {
         // cover 2
-        GraphPoet poet = new GraphPoet(new File("./test/poet/test-corpus.txt"));
-        assertEquals("Seek to explore strange new life and exciting synergies!",
+        GraphPoet poet = new GraphPoet(new File("test/poet/test-corpus.txt"));
+        assertEquals("seek to explore strange new life and exciting synergies!",
             poet.poem("Seek to explore new and exciting synergies!"));
     }
 

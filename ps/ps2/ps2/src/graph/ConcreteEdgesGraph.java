@@ -22,7 +22,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     // Safety from rep exposure:
     //   All fields are private, and can only be changed by methods with spec.
 
-    ConcreteEdgesGraph() {
+    public ConcreteEdgesGraph() {
         checkRep();
     }
 
@@ -37,7 +37,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     }
 
     public ConcreteEdgesGraph<L> empty() {
-        return new ConcreteEdgesGraph<>();
+        return new ConcreteEdgesGraph<L>();
     }
 
     @Override
