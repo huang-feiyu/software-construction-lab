@@ -25,7 +25,7 @@ public interface Graph<L> {
      * @param <L> type of vertex labels in the graph, must be immutable
      * @return a new empty weighted directed graph
      */
-    public static <L> Graph<L> empty() {
+    static <L> Graph<L> empty() {
         throw new RuntimeException("not implemented");
     }
 
@@ -36,15 +36,17 @@ public interface Graph<L> {
      * @return true if this graph did not already include a vertex with the
      * given label; otherwise false (and this graph is not modified)
      */
-    public boolean add(L vertex);
+    boolean add(L vertex);
 
     /**
      * Add, change, or remove a weighted directed edge in this graph.
-     * If weight is nonzero, add an edge or update the weight of that edge;
+     * If weight > zero, add an edge or update the weight of that edge;
      * vertices with the given labels are added to the graph if they do not
      * already exist.
-     * If weight is zero, remove the edge if it exists (the graph is not
+     * If weight = zero, remove the edge if it exists (the graph is not
      * otherwise modified).
+     * If weight < zero, raise <code>IllegalArgumentException</code> (the graph
+     * is not otherwise modified)
      *
      * @param source label of the source vertex
      * @param target label of the target vertex
@@ -52,7 +54,7 @@ public interface Graph<L> {
      * @return the previous weight of the edge, or zero if there was no such
      * edge
      */
-    public int set(L source, L target, int weight);
+    int set(L source, L target, int weight);
 
     /**
      * Remove a vertex from this graph; any edges to or from the vertex are
@@ -62,14 +64,14 @@ public interface Graph<L> {
      * @return true if this graph included a vertex with the given label;
      * otherwise false (and this graph is not modified)
      */
-    public boolean remove(L vertex);
+    boolean remove(L vertex);
 
     /**
      * Get all the vertices in this graph.
      *
      * @return the set of labels of vertices in this graph
      */
-    public Set<L> vertices();
+    Set<L> vertices();
 
     /**
      * Get the source vertices with directed edges to a target vertex and the
@@ -81,7 +83,7 @@ public interface Graph<L> {
      * the value for each key is the (nonzero) weight of the edge from
      * the key to target
      */
-    public Map<L, Integer> sources(L target);
+    Map<L, Integer> sources(L target);
 
     /**
      * Get the target vertices with directed edges from a source vertex and the
@@ -93,6 +95,6 @@ public interface Graph<L> {
      * the value for each key is the (nonzero) weight of the edge from
      * source to the key
      */
-    public Map<L, Integer> targets(L source);
+    Map<L, Integer> targets(L source);
 
 }
