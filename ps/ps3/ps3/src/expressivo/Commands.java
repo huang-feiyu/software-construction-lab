@@ -33,8 +33,8 @@ public class Commands {
      *
      * @param expression  the expression to simplify
      * @param environment maps variables to values.  Variables are required to be case-sensitive nonempty
-     *                    strings of letters.  The set of variables in environment is allowed to be different than the
-     *                    set of variables actually found in expression.  Values must be nonnegative numbers.
+     *                    strings of letters.  The set of variables in environment is allowed to be different from the
+     *                    set of variables actually found in expression.  Values must be non-negative numbers.
      * @return an expression equal to the input, but after substituting every variable v that appears in both
      * the expression and the environment with its value, environment.get(v).  If there are no
      * variables left in this expression after substitution, it must be evaluated to a single number.

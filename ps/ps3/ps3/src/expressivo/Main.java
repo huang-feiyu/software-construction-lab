@@ -48,7 +48,7 @@ public class Main {
                     output = Commands.differentiate(currentExpression.get(), variable);
                     currentExpression = Optional.of(output);
                 } else if (input.startsWith(SIMPLIFY_PREFIX)) {
-                    final Map<String, Double> environment = parseSimpify(input);
+                    final Map<String, Double> environment = parseSimplify(input);
                     output = Commands.simplify(currentExpression.get(), environment);
                     // ... but don't change currentExpression
                 } else {
@@ -77,15 +77,14 @@ public class Main {
             throw new CommandSyntaxException("usage: !d/d must be followed by a variable name");
         }
 
-        final String variable = commandMatcher.group(1);
-        return variable;
+        return commandMatcher.group(1);
     }
 
     private static final String SIMPLIFY_PREFIX = "!simplify";
     private static final String ASSIGNMENT = "(" + VARIABLE + ") *= *([^ ]+)";
     private static final String SIMPLIFY = SIMPLIFY_PREFIX + "( +" + ASSIGNMENT + ")* *";
 
-    private static Map<String, Double> parseSimpify(final String input) {
+    private static Map<String, Double> parseSimplify(final String input) {
         final Matcher commandMatcher = Pattern.compile(SIMPLIFY).matcher(input);
         if (!commandMatcher.matches()) {
             throw new CommandSyntaxException("usage: !simplify var1=val1 var2=val2 ...");
@@ -95,7 +94,7 @@ public class Main {
         final Matcher argumentMatcher = Pattern.compile(ASSIGNMENT).matcher(input);
         while (argumentMatcher.find()) {
             final String variable = argumentMatcher.group(1);
-            final double value = Double.valueOf(argumentMatcher.group(2));
+            final double value = Double.parseDouble(argumentMatcher.group(2));
             environment.put(variable, value);
         }
 
