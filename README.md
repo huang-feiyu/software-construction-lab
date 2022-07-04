@@ -9,6 +9,4 @@
 * [ps0](./ps/ps0/ps0): Turtle Graphics
 * [ps1](./ps/ps1/ps1): Tweet Tweet (没有认真写)
 * [ps2](./ps/ps2/ps2): Poetic Walks
-* [ps2](./ps/ps3/ps3): Expressivo
-
-
+* [ps3](./ps/ps3/ps3): Expressivo
