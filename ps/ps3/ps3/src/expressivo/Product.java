@@ -37,6 +37,14 @@ public class Product implements Expression {
     }
 
     @Override
+    public Expression differentiation(String varName) {
+        // Product Rule
+        Product left = new Product(getLeft().differentiation(varName), getRight());
+        Product right = new Product(getRight().differentiation(varName), getLeft());
+        return new Sum(left, right);
+    }
+
+    @Override
     public Expression getLeft() {
         return left;
     }

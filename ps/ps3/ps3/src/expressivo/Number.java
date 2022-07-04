@@ -38,4 +38,10 @@ public class Number implements Expression {
         return Double.hashCode(num);
     }
 
+    @Override
+    public Expression differentiation(String varName) {
+        // Constant Rule
+        return new Number(0);
+    }
+
 }

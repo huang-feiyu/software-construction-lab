@@ -42,11 +42,11 @@ edit `Expression.g4`.
 
 ```antlrv4
 root : expr EOF;
-expr : expr TIMES expr #Product
+expr : expr TIMES expr  #Product
        | expr PLUS expr #Sum
-       | NUM #Num
-       | VAR #Var
-       | '(' expr ')' #Parens
+       | NUM            #Num
+       | VAR            #Var
+       | '(' expr ')'   #Parens
        ;
 
 NUM : [0-9]+('.'[0-9]*)? | '.'[0-9]+;
@@ -63,3 +63,15 @@ implement `Expression.parse()`
 
 Before implementing the problem, I think it is very difficult...
 I should be more confident in myself.
+
+## Problem 3
+
+> Differentiation
+ 
+![Rules](https://www.onlinemathlearning.com/image-files/differentiation-rules.png)
+
+<strong>*</strong> Add an operation `differentiation()` to `Expression`.
+
+<strong>*</strong> Implement `Commands.differentiate()`.
+
+Easy to implement. But I do not like to write tests, waiting for next ps.

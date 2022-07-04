@@ -56,22 +56,66 @@ public interface Expression {
     @Override
     int hashCode();
 
+    /**
+     * Generate an expression that takes the derivative of a variable.
+     *
+     * @param varName the name of the variable.
+     * @return derivative of <code>this</code> expression. The derivative rules
+     * are defined in <code>README</code> document.
+     */
+    Expression differentiation(String varName);
+
+    /**
+     * Get name of a <code>Variable</code>.
+     *
+     * @return <code>Variable</code> name.
+     * @throws UnsupportedOperationException if <code>Expression</code> is not a
+     * <code>Variable</code>.
+     */
     default String getName() {
         throw new UnsupportedOperationException(this.getClass().toString() + ": do not support getName()");
     }
 
+    /**
+     * Get left expression of a <code>Sum</code> or <code>Product</code>.
+     *
+     * @return left expression
+     * @throws UnsupportedOperationException if <code>Expression</code> is neither
+     * <code>Sum</code> nor <code>Product</code>.
+     */
     default Expression getLeft() {
         throw new UnsupportedOperationException(this.getClass().toString() + ": do not support getLeft()");
     }
 
+    /**
+     * Get right expression of a <code>Sum</code> or <code>Product</code>.
+     *
+     * @return right expression
+     * @throws UnsupportedOperationException if <code>Expression</code> is neither
+     * <code>Sum</code> nor <code>Product</code>.
+     */
     default Expression getRight() {
         throw new UnsupportedOperationException(this.getClass().toString() + ": do not support getRight()");
     }
 
+    /**
+     * Generate left * right.
+     *
+     * @param left expression
+     * @param right expression
+     * @return <code>Product</code> represents as left * right.
+     */
     static Expression times(Expression left, Expression right) {
         return new Product(left, right);
     }
 
+    /**
+     * Generate left + right.
+     *
+     * @param left expression
+     * @param right expression
+     * @return <code>Sum</code> represents as left + right.
+     */
     static Expression plus(Expression left, Expression right) {
         return new Sum(left, right);
     }

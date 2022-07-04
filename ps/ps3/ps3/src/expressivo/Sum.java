@@ -37,6 +37,12 @@ public class Sum implements Expression {
     }
 
     @Override
+    public Expression differentiation(String varName) {
+        // Sum Rule
+        return new Sum(getLeft().differentiation(varName), getRight().differentiation(varName));
+    }
+
+    @Override
     public Expression getLeft() {
         return left;
     }

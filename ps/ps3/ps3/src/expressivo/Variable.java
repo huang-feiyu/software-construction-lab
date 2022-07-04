@@ -38,6 +38,12 @@ public class Variable implements Expression {
     }
 
     @Override
+    public Expression differentiation(String varName) {
+        // y is NOT a function of x
+        return new Number(varName.equals(getName()) ? 1 : 0);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
