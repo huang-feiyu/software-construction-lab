@@ -7,7 +7,7 @@
  *
  * In order to compile this file, navigate to this folder
  * (src/expressivo/parser) and run the following command:
- * 
+ *
  * java -jar ../../../lib/antlr.jar Expression.g4
  *
  * PS3 instructions: you are free to change this grammar.
@@ -29,10 +29,19 @@ import Configuration;
  * For more information, see reading 18 about parser generators, which explains
  * how to use Antlr and has links to reference information.
  */
-root : sum EOF;
-sum : primitive ('+' primitive)*;
-primitive : NUMBER | '(' sum ')';
-NUMBER : [0-9]+;
+root : expr EOF;
+expr : expr TIMES expr
+       | expr PLUS expr
+       | NUM
+       | VAR
+       | '(' expr ')'
+       ;
+
+NUM : [0-9]+('.'[0-9]*)? | '.'[0-9]+;
+VAR : [a-zA-Z]+;
+
+TIMES : '*';
+PLUS : '+';
 
 /* Tell Antlr to ignore spaces around tokens. */
-SPACES : [ ]+ -> skip;
+SPACES : [ \t\r\n]+ -> skip;

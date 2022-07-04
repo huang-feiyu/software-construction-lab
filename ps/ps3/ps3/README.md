@@ -6,8 +6,8 @@
 
 > Representing Expressions
 
-Define an immutable, recursive abstract data type(ADT, aka `interface`) to represent expressions as abstract syntax trees.
-Then create the variants implementing the interface.
+Define an immutable, recursive abstract data type(ADT, aka `interface`) to represent
+expressions as abstract syntax trees. Then create the variants implementing the interface.
 
 Representing Invariants:
 
@@ -28,3 +28,30 @@ Expression = Number(num: double)
 | `Product`  | left:expression * right:expression           | \-                      | safe         |
 
 Because I am too busy recently, so I have **not** implemented tests.
+
+<s>TODO: Use knowledge in [little-language-2](https://web.mit.edu/6.031/www/sp21/classes/28-little-languages-2/)
+to refactor the code.</s>
+
+## Problem 2
+
+> Parsing Expressions
+
+<strong>*</strong> According to
+[Parser Generators](https://web.mit.edu/6.005/www/sp16/classes/18-parser-generators/),
+edit `Expression.g4`.
+
+```antlrv4
+root : expr EOF;
+expr : expr TIMES expr | expr PLUS expr
+       | NUM | VAR | '(' expr ')';
+
+NUM : [0-9]+('.'[0-9]*)? | '.'[0-9]+;
+VAR : [a-zA-Z]+;
+
+TIMES : '*';
+PLUS : '+';
+
+SPACES : [ \t\r\n]+ -> skip;
+```
+
+<strong>*</strong> Implement `Expression.parse()`
