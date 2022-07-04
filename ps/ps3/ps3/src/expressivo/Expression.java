@@ -3,6 +3,8 @@
  */
 package expressivo;
 
+import java.util.Map;
+
 /**
  * An immutable data type representing a polynomial expression of:
  * + and *
@@ -63,7 +65,15 @@ public interface Expression {
      * @return derivative of <code>this</code> expression. The derivative rules
      * are defined in <code>README</code> document.
      */
-    Expression differentiation(String varName);
+    Expression differentiate(String varName);
+
+    /**
+     * Simplify <code>this</code> expression. Simplified expression is equivalent
+     * to previous.
+     *
+     * @return simplified expression.
+     */
+    Expression simplify(Map<Expression, Double> values);
 
     /**
      * Get name of a <code>Variable</code>.
@@ -106,6 +116,25 @@ public interface Expression {
      * @return <code>Product</code> represents as left * right.
      */
     static Expression times(Expression left, Expression right) {
+        Number num0 = new Number(0);
+        Number num1 = new Number(1);
+        if (left.equals(num0) || right.equals(num0)) {
+            // rule 2
+            return num0;
+        } else if (left.equals(num1)) {
+            // rule 1
+            return right;
+        } else if (right.equals(num1)) {
+            // rule 1
+            return left;
+        }
+
+        // rule 4
+        if (left instanceof Number && right instanceof Number) {
+            Number leftNum = (Number) left;
+            Number rightNum = (Number) right;
+            return new Number(leftNum.getNum() * rightNum.getNum());
+        }
         return new Product(left, right);
     }
 
@@ -117,6 +146,20 @@ public interface Expression {
      * @return <code>Sum</code> represents as left + right.
      */
     static Expression plus(Expression left, Expression right) {
+        Number num0 = new Number(0);
+        // rule 3
+        if (left.equals(num0)) {
+            return right;
+        } else if (right.equals(num0)) {
+            return left;
+        }
+
+        // rule 4
+        if (left instanceof Number && right instanceof Number) {
+            Number leftNum = (Number) left;
+            Number rightNum = (Number) right;
+            return new Number(leftNum.getNum() + rightNum.getNum());
+        }
         return new Sum(left, right);
     }
 

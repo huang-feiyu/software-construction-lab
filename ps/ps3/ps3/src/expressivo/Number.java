@@ -1,5 +1,7 @@
 package expressivo;
 
+import java.util.Map;
+
 public class Number implements Expression {
     // Abstraction Function:
     //   represents a non-negative number
@@ -17,6 +19,10 @@ public class Number implements Expression {
     public Number(double num) {
         this.num = num;
         checkRep();
+    }
+
+    public double getNum() {
+        return num;
     }
 
     @Override
@@ -39,9 +45,14 @@ public class Number implements Expression {
     }
 
     @Override
-    public Expression differentiation(String varName) {
+    public Expression differentiate(String varName) {
         // Constant Rule
         return new Number(0);
+    }
+
+    @Override
+    public Expression simplify(Map<Expression, Double> values) {
+        return this;
     }
 
 }

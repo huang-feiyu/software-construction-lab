@@ -1,5 +1,7 @@
 package expressivo;
 
+import java.util.Map;
+
 public class Product implements Expression {
     // Abstraction Function:
     //   left * right
@@ -37,11 +39,18 @@ public class Product implements Expression {
     }
 
     @Override
-    public Expression differentiation(String varName) {
+    public Expression differentiate(String varName) {
         // Product Rule
-        Product left = new Product(getLeft().differentiation(varName), getRight());
-        Product right = new Product(getRight().differentiation(varName), getLeft());
+        Product left = new Product(getLeft().differentiate(varName), getRight());
+        Product right = new Product(getRight().differentiate(varName), getLeft());
         return new Sum(left, right);
+    }
+
+    @Override
+    public Expression simplify(Map<Expression, Double> values) {
+        Expression left = getLeft().simplify(values);
+        Expression right = getRight().simplify(values);
+        return Expression.times(left, right);
     }
 
     @Override

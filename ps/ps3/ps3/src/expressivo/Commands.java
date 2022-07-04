@@ -3,6 +3,7 @@
  */
 package expressivo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,7 +27,7 @@ public class Commands {
      */
     public static String differentiate(String expression, String variable) {
         Expression parsedExpr = Expression.parse(expression);
-        return parsedExpr.differentiation(variable).toString();
+        return parsedExpr.differentiate(variable).toString();
     }
 
     /**
@@ -43,8 +44,12 @@ public class Commands {
      * @throws IllegalArgumentException if the expression is invalid
      */
     public static String simplify(String expression, Map<String, Double> environment) {
-        System.out.println(expression + environment);
-        throw new RuntimeException("unimplemented");
+        Expression parsedExpr = Expression.parse(expression);
+        Map<Expression, Double> values = new HashMap<>();
+        for (String expr : environment.keySet()) {
+            values.put(Expression.parse(expr), environment.get(expr));
+        }
+        return parsedExpr.simplify(values).toString();
     }
 
 }

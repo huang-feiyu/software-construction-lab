@@ -70,8 +70,21 @@ I should be more confident in myself.
  
 ![Rules](https://www.onlinemathlearning.com/image-files/differentiation-rules.png)
 
-<strong>*</strong> Add an operation `differentiation()` to `Expression`.
+<strong>*</strong> Add an operation `differentiate()` to `Expression`.
 
 <strong>*</strong> Implement `Commands.differentiate()`.
 
 Easy to implement. But I do not like to write tests, waiting for next ps.
+
+## Problem 4
+
+> Simplification
+
+<strong>*</strong> Add an operation `simplify()` to `Expression`.
+
+1. `Number(1) * Expression`
+2. `Number(0) * Expression`
+3. `Number(0) + Expression`
+4. `Number(#) * Number(#)`
+
+<strong>*</strong> Implement `Commands.simplify()`.

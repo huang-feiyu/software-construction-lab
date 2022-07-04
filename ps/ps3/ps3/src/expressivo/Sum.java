@@ -1,5 +1,7 @@
 package expressivo;
 
+import java.util.Map;
+
 public class Sum implements Expression {
     // Abstraction Function:
     //   left + right
@@ -37,9 +39,16 @@ public class Sum implements Expression {
     }
 
     @Override
-    public Expression differentiation(String varName) {
+    public Expression differentiate(String varName) {
         // Sum Rule
-        return new Sum(getLeft().differentiation(varName), getRight().differentiation(varName));
+        return new Sum(getLeft().differentiate(varName), getRight().differentiate(varName));
+    }
+
+    @Override
+    public Expression simplify(Map<Expression, Double> values) {
+        Expression left = getLeft().simplify(values);
+        Expression right = getRight().simplify(values);
+        return Expression.plus(left, right);
     }
 
     @Override
