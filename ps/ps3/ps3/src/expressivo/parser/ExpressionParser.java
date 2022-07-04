@@ -142,8 +142,55 @@ public class ExpressionParser extends Parser {
   }
 
   public static class ExprContext extends ParserRuleContext {
-    public TerminalNode NUM() { return getToken(ExpressionParser.NUM, 0); }
+    public ExprContext(ParserRuleContext parent, int invokingState) {
+      super(parent, invokingState);
+    }
+    @Override public int getRuleIndex() { return RULE_expr; }
+   
+    public ExprContext() { }
+    public void copyFrom(ExprContext ctx) {
+      super.copyFrom(ctx);
+    }
+  }
+  public static class VarContext extends ExprContext {
     public TerminalNode VAR() { return getToken(ExpressionParser.VAR, 0); }
+    public VarContext(ExprContext ctx) { copyFrom(ctx); }
+    @Override
+    public void enterRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterVar(this);
+    }
+    @Override
+    public void exitRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitVar(this);
+    }
+  }
+  public static class ParensContext extends ExprContext {
+    public ExprContext expr() {
+      return getRuleContext(ExprContext.class,0);
+    }
+    public ParensContext(ExprContext ctx) { copyFrom(ctx); }
+    @Override
+    public void enterRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterParens(this);
+    }
+    @Override
+    public void exitRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitParens(this);
+    }
+  }
+  public static class NumContext extends ExprContext {
+    public TerminalNode NUM() { return getToken(ExpressionParser.NUM, 0); }
+    public NumContext(ExprContext ctx) { copyFrom(ctx); }
+    @Override
+    public void enterRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterNum(this);
+    }
+    @Override
+    public void exitRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitNum(this);
+    }
+  }
+  public static class ProductContext extends ExprContext {
     public List<ExprContext> expr() {
       return getRuleContexts(ExprContext.class);
     }
@@ -151,18 +198,32 @@ public class ExpressionParser extends Parser {
       return getRuleContext(ExprContext.class,i);
     }
     public TerminalNode TIMES() { return getToken(ExpressionParser.TIMES, 0); }
-    public TerminalNode PLUS() { return getToken(ExpressionParser.PLUS, 0); }
-    public ExprContext(ParserRuleContext parent, int invokingState) {
-      super(parent, invokingState);
-    }
-    @Override public int getRuleIndex() { return RULE_expr; }
+    public ProductContext(ExprContext ctx) { copyFrom(ctx); }
     @Override
     public void enterRule(ParseTreeListener listener) {
-      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterExpr(this);
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterProduct(this);
     }
     @Override
     public void exitRule(ParseTreeListener listener) {
-      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitExpr(this);
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitProduct(this);
+    }
+  }
+  public static class SumContext extends ExprContext {
+    public List<ExprContext> expr() {
+      return getRuleContexts(ExprContext.class);
+    }
+    public ExprContext expr(int i) {
+      return getRuleContext(ExprContext.class,i);
+    }
+    public TerminalNode PLUS() { return getToken(ExpressionParser.PLUS, 0); }
+    public SumContext(ExprContext ctx) { copyFrom(ctx); }
+    @Override
+    public void enterRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).enterSum(this);
+    }
+    @Override
+    public void exitRule(ParseTreeListener listener) {
+      if ( listener instanceof ExpressionListener ) ((ExpressionListener)listener).exitSum(this);
     }
   }
 
@@ -185,18 +246,28 @@ public class ExpressionParser extends Parser {
       switch (_input.LA(1)) {
       case NUM:
         {
+        _localctx = new NumContext(_localctx);
+        _ctx = _localctx;
+        _prevctx = _localctx;
+
         setState(8);
         match(NUM);
         }
         break;
       case VAR:
         {
+        _localctx = new VarContext(_localctx);
+        _ctx = _localctx;
+        _prevctx = _localctx;
         setState(9);
         match(VAR);
         }
         break;
       case T__0:
         {
+        _localctx = new ParensContext(_localctx);
+        _ctx = _localctx;
+        _prevctx = _localctx;
         setState(10);
         match(T__0);
         setState(11);
@@ -221,7 +292,7 @@ public class ExpressionParser extends Parser {
           switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
           case 1:
             {
-            _localctx = new ExprContext(_parentctx, _parentState);
+            _localctx = new ProductContext(new ExprContext(_parentctx, _parentState));
             pushNewRecursionContext(_localctx, _startState, RULE_expr);
             setState(16);
             if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
@@ -233,7 +304,7 @@ public class ExpressionParser extends Parser {
             break;
           case 2:
             {
-            _localctx = new ExprContext(_parentctx, _parentState);
+            _localctx = new SumContext(new ExprContext(_parentctx, _parentState));
             pushNewRecursionContext(_localctx, _startState, RULE_expr);
             setState(19);
             if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");

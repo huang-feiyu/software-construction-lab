@@ -21,13 +21,63 @@ public interface ExpressionListener extends ParseTreeListener {
    */
   void exitRoot(ExpressionParser.RootContext ctx);
   /**
-   * Enter a parse tree produced by {@link ExpressionParser#expr}.
+   * Enter a parse tree produced by the {@code Var}
+   * labeled alternative in {@link ExpressionParser#expr}.
    * @param ctx the parse tree
    */
-  void enterExpr(ExpressionParser.ExprContext ctx);
+  void enterVar(ExpressionParser.VarContext ctx);
   /**
-   * Exit a parse tree produced by {@link ExpressionParser#expr}.
+   * Exit a parse tree produced by the {@code Var}
+   * labeled alternative in {@link ExpressionParser#expr}.
    * @param ctx the parse tree
    */
-  void exitExpr(ExpressionParser.ExprContext ctx);
+  void exitVar(ExpressionParser.VarContext ctx);
+  /**
+   * Enter a parse tree produced by the {@code Parens}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void enterParens(ExpressionParser.ParensContext ctx);
+  /**
+   * Exit a parse tree produced by the {@code Parens}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void exitParens(ExpressionParser.ParensContext ctx);
+  /**
+   * Enter a parse tree produced by the {@code Num}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void enterNum(ExpressionParser.NumContext ctx);
+  /**
+   * Exit a parse tree produced by the {@code Num}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void exitNum(ExpressionParser.NumContext ctx);
+  /**
+   * Enter a parse tree produced by the {@code Product}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void enterProduct(ExpressionParser.ProductContext ctx);
+  /**
+   * Exit a parse tree produced by the {@code Product}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void exitProduct(ExpressionParser.ProductContext ctx);
+  /**
+   * Enter a parse tree produced by the {@code Sum}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void enterSum(ExpressionParser.SumContext ctx);
+  /**
+   * Exit a parse tree produced by the {@code Sum}
+   * labeled alternative in {@link ExpressionParser#expr}.
+   * @param ctx the parse tree
+   */
+  void exitSum(ExpressionParser.SumContext ctx);
 }

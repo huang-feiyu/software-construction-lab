@@ -30,11 +30,11 @@ import Configuration;
  * how to use Antlr and has links to reference information.
  */
 root : expr EOF;
-expr : expr TIMES expr
-       | expr PLUS expr
-       | NUM
-       | VAR
-       | '(' expr ')'
+expr : expr TIMES expr #Product
+       | expr PLUS expr #Sum
+       | NUM #Num
+       | VAR #Var
+       | '(' expr ')' #Parens
        ;
 
 NUM : [0-9]+('.'[0-9]*)? | '.'[0-9]+;
