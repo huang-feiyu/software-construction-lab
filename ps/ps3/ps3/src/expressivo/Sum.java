@@ -17,7 +17,7 @@ public class Sum implements Expression {
 
     @Override
     public String toString() {
-        return "(" + left.toString() + " + " + right.toString() + ") ";
+        return "(" + left.toString() + " + " + right.toString() + ")";
     }
 
     @Override

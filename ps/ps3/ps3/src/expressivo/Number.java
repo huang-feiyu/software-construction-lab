@@ -21,7 +21,7 @@ public class Number implements Expression {
 
     @Override
     public String toString() {
-        return num + " ";
+        return num + "";
     }
 
     @Override

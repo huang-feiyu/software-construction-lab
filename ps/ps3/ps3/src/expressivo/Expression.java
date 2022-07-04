@@ -30,7 +30,7 @@ public interface Expression {
      * @throws IllegalArgumentException if the expression is invalid
      */
     static Expression parse(String input) {
-        throw new RuntimeException("unimplemented");
+        return Parser.parse(input);
     }
 
     /**
@@ -66,6 +66,14 @@ public interface Expression {
 
     default Expression getRight() {
         throw new UnsupportedOperationException(this.getClass().toString() + ": do not support getRight()");
+    }
+
+    static Expression times(Expression left, Expression right) {
+        return new Product(left, right);
+    }
+
+    static Expression plus(Expression left, Expression right) {
+        return new Sum(left, right);
     }
 
 }

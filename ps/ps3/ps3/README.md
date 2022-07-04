@@ -42,8 +42,12 @@ edit `Expression.g4`.
 
 ```antlrv4
 root : expr EOF;
-expr : expr TIMES expr | expr PLUS expr
-       | NUM | VAR | '(' expr ')';
+expr : expr TIMES expr #Product
+       | expr PLUS expr #Sum
+       | NUM #Num
+       | VAR #Var
+       | '(' expr ')' #Parens
+       ;
 
 NUM : [0-9]+('.'[0-9]*)? | '.'[0-9]+;
 VAR : [a-zA-Z]+;
@@ -54,4 +58,8 @@ PLUS : '+';
 SPACES : [ \t\r\n]+ -> skip;
 ```
 
-<strong>*</strong> Implement `Expression.parse()`
+<strong>*</strong> According to [Parser Generators](https://github.com/mit6005/sp16-ex18-parser-generators),
+implement `Expression.parse()`
+
+Before implementing the problem, I think it is very difficult...
+I should be more confident in myself.
