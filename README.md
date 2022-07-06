@@ -10,3 +10,5 @@
 * [ps1](./ps/ps1/ps1): Tweet Tweet (没有认真写)
 * [ps2](./ps/ps2/ps2): Poetic Walks
 * [ps3](./ps/ps3/ps3): Expressivo
+* [ps4](./ps/ps4/ps4): Multiplayer Minesweeper
+
