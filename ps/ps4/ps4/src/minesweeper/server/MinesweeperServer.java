@@ -114,28 +114,37 @@ public class MinesweeperServer {
             // TODO Problem 5
         }
         String[] tokens = input.split(" ");
-        if (tokens[0].equals("look")) {
-            // 'look' request
-            // TODO Problem 5
-        } else if (tokens[0].equals("help")) {
-            // 'help' request
-            // TODO Problem 5
-        } else if (tokens[0].equals("bye")) {
-            // 'bye' request
-            // TODO Problem 5
-        } else {
-            int x = Integer.parseInt(tokens[1]);
-            int y = Integer.parseInt(tokens[2]);
-            if (tokens[0].equals("dig")) {
-                // 'dig x y' request
+        switch (tokens[0]) {
+            case "look":
+                // 'look' request
                 // TODO Problem 5
-            } else if (tokens[0].equals("flag")) {
-                // 'flag x y' request
+                break;
+            case "help":
+                // 'help' request
                 // TODO Problem 5
-            } else if (tokens[0].equals("deflag")) {
-                // 'deflag x y' request
+                break;
+            case "bye":
+                // 'bye' request
                 // TODO Problem 5
-            }
+                break;
+            default:
+                int x = Integer.parseInt(tokens[1]);
+                int y = Integer.parseInt(tokens[2]);
+                switch (tokens[0]) {
+                    case "dig":
+                        // 'dig x y' request
+                        // TODO Problem 5
+                        break;
+                    case "flag":
+                        // 'flag x y' request
+                        // TODO Problem 5
+                        break;
+                    case "deflag":
+                        // 'deflag x y' request
+                        // TODO Problem 5
+                        break;
+                }
+                break;
         }
         // TODO: Should never get here, make sure to return in each of the cases above
         throw new UnsupportedOperationException();
@@ -198,29 +207,35 @@ public class MinesweeperServer {
             while (!arguments.isEmpty()) {
                 String flag = arguments.remove();
                 try {
-                    if (flag.equals("--debug")) {
-                        debug = true;
-                    } else if (flag.equals("--no-debug")) {
-                        debug = false;
-                    } else if (flag.equals("--port")) {
-                        port = Integer.parseInt(arguments.remove());
-                        if (port < 0 || port > MAXIMUM_PORT) {
-                            throw new IllegalArgumentException("port " + port + " out of range");
-                        }
-                    } else if (flag.equals("--size")) {
-                        String[] sizes = arguments.remove().split(",");
-                        sizeX = Integer.parseInt(sizes[0]);
-                        sizeY = Integer.parseInt(sizes[1]);
-                        file = Optional.empty();
-                    } else if (flag.equals("--file")) {
-                        sizeX = -1;
-                        sizeY = -1;
-                        file = Optional.of(new File(arguments.remove()));
-                        if (!file.get().isFile()) {
-                            throw new IllegalArgumentException("file not found: \"" + file.get() + "\"");
-                        }
-                    } else {
-                        throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
+                    switch (flag) {
+                        case "--debug":
+                            debug = true;
+                            break;
+                        case "--no-debug":
+                            debug = false;
+                            break;
+                        case "--port":
+                            port = Integer.parseInt(arguments.remove());
+                            if (port < 0 || port > MAXIMUM_PORT) {
+                                throw new IllegalArgumentException("port " + port + " out of range");
+                            }
+                            break;
+                        case "--size":
+                            String[] sizes = arguments.remove().split(",");
+                            sizeX = Integer.parseInt(sizes[0]);
+                            sizeY = Integer.parseInt(sizes[1]);
+                            file = Optional.empty();
+                            break;
+                        case "--file":
+                            sizeX = -1;
+                            sizeY = -1;
+                            file = Optional.of(new File(arguments.remove()));
+                            if (!file.get().isFile()) {
+                                throw new IllegalArgumentException("file not found: \"" + file.get() + "\"");
+                            }
+                            break;
+                        default:
+                            throw new IllegalArgumentException("unknown option: \"" + flag + "\"");
                     }
                 } catch (NoSuchElementException nsee) {
                     throw new IllegalArgumentException("missing argument for " + flag);
