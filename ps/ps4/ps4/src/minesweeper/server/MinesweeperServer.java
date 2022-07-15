@@ -6,6 +6,10 @@ package minesweeper.server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import minesweeper.Board;
 
@@ -61,18 +65,23 @@ public class MinesweeperServer {
      *                     (IOExceptions from individual clients do *not* terminate serve())
      */
     public void serve() throws IOException {
-        while (true) {
-            // block until a client connects
-            Socket socket = serverSocket.accept();
+        System.out.println("MinesweeperServer serve and listen");
+        // thread pool to handle multiple threads
+        ExecutorService service = Executors.newCachedThreadPool();
 
-            // handle the client
-            try {
-                handleConnection(socket);
-            } catch (IOException ioe) {
-                ioe.printStackTrace(); // but don't terminate serve()
-            } finally {
-                socket.close();
+        try {
+            while (true) {
+                Socket socket = serverSocket.accept();
+                service.execute(() -> {
+                    try {
+                        handleConnection(socket);
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                });
             }
+        } finally {
+            service.shutdown();
         }
     }
 
