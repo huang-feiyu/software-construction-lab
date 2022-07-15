@@ -211,7 +211,7 @@ public class MinesweeperServer {
         int sizeY = DEFAULT_SIZE;
         Optional<File> file = Optional.empty();
 
-        Queue<String> arguments = new LinkedList<String>(Arrays.asList(args));
+        Queue<String> arguments = new LinkedList<>(Arrays.asList(args));
         try {
             while (!arguments.isEmpty()) {
                 String flag = arguments.remove();

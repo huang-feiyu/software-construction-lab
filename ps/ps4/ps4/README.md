@@ -9,3 +9,9 @@
 > set up the server to deal with multiple clients.
 
 Use `ExecutorService` as a thread pool.
+
+## Problem 2
+
+> design a data structure for Minesweeper.
+
+According to [Board.java](./src/minesweeper/Board.java) first comment inside the class.
