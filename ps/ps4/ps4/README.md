@@ -37,3 +37,10 @@ MinesweeperServer [--debug | --no-debug] [--port PORT]
                   [--size SIZE_X,SIZE_Y | --file FILE]
 ```
 
+## Problem 5
+
+> putting it all together.
+
+I have an emergency task now, so I'm not going to do this problem.
+
+The rest of the problems is fairly simple to implement. (I think)
