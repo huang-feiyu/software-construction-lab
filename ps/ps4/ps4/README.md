@@ -25,3 +25,15 @@ NOTE: X, Y is reversed for some reason.
 In my case, I used `synchronized` to make the entire system thread-safe.
 
 Every method writing or reading from the board is synchronized.
+
+## Problem 4
+
+> initialize the board based on command-line options.
+
+```
+Usage:
+
+MinesweeperServer [--debug | --no-debug] [--port PORT]
+                  [--size SIZE_X,SIZE_Y | --file FILE]
+```
+

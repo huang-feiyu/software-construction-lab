@@ -33,7 +33,7 @@ public class Board {
     private static final char FLAGGED = 'F';
     private static final char TOUCHED = ' ';
 
-    // board: sizeY * sizeX cells (NOTE: x,y is reversed; need a process before applying to public method)
+    // board: sizeX * sizeY cells (NOTE: x,y is reversed; need a process before applying to public method)
     private final int sizeX;
     private final int sizeY;
     private int mineNum;
