@@ -165,7 +165,7 @@ public class Board {
     /**
      * Update <code>board</code> according to other 2D arrays.
      */
-    private void updateBoard() {
+    private synchronized void updateBoard() {
         checkRep();
         calculateBoard();
         for (int i = 0; i < sizeX; i++) {
@@ -219,7 +219,7 @@ public class Board {
      *
      * @return true if the game is over, false otherwise.
      */
-    public boolean dig(int x, int y) {
+    public synchronized boolean dig(int x, int y) {
         checkRep();
         if (!validateCoordinate(x, y)) {
             // NOTE: should do nothing
@@ -274,7 +274,7 @@ public class Board {
      * * cell is untouched, then flag it;
      * * otherwise, do not change anything.
      */
-    public void flag(int x, int y) {
+    public synchronized void flag(int x, int y) {
         checkRep();
         if (!validateCoordinate(x, y)) {
             // NOTE: should do nothing
@@ -292,7 +292,7 @@ public class Board {
      * * cell is flagged, then deflag it;
      * * otherwise, do not change anything.
      */
-    public void deflag(int x, int y) {
+    public synchronized void deflag(int x, int y) {
         checkRep();
         if (!validateCoordinate(x, y)) {
             // NOTE: should do nothing
@@ -316,7 +316,8 @@ public class Board {
     /**
      * Return the board in string format.
      */
-    public String toString() {
+    @Override
+    public synchronized String toString() {
         checkRep();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < sizeX; i++) {
@@ -332,7 +333,7 @@ public class Board {
     /**
      * debug: print all information
      */
-    private String debugPrintAllInfo() {
+    private synchronized String debugPrintAllInfo() {
         checkRep();
         StringBuilder sb = new StringBuilder();
         sb.append("=====mineBoard=====\n");

@@ -17,3 +17,11 @@ Use `ExecutorService` as a thread pool.
 According to [Board.java](./src/minesweeper/Board.java) first comment inside the class.
 
 NOTE: X, Y is reversed for some reason.
+
+## Problem 3
+
+> make the entire system thread-safe.
+
+In my case, I used `synchronized` to make the entire system thread-safe.
+
+Every method writing or reading from the board is synchronized.
