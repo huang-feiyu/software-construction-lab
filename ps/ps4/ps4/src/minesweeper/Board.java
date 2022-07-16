@@ -3,6 +3,10 @@
  */
 package minesweeper;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -44,6 +48,57 @@ public class Board {
         assert sizeX > 0;
         assert sizeY > 0;
         assert mineNum > 0 && mineNum <= sizeX * sizeY;
+    }
+
+    /**
+     * Build a board from a specific format file.
+     *
+     * @param file the file to read from
+     */
+    public Board(File file) throws IOException {
+        // get lines
+        List<String> lines = Files.readAllLines(file.toPath());
+
+        // first line: col row
+        if (!lines.get(0).matches("[0-9]+ [0-9]+")) {
+            throw new RuntimeException("Wrong format");
+        }
+        String[] firstLine = lines.get(0).split(" ");
+        sizeY = Integer.parseInt(firstLine[0]);
+        sizeX = Integer.parseInt(firstLine[1]);
+
+        board = new char[sizeX][sizeY];
+        mineBoard = new boolean[sizeX][sizeY];
+        untouchedBoard = new boolean[sizeX][sizeY];
+        flaggedBoard = new boolean[sizeX][sizeY];
+        mineNumBoard = new int[sizeX][sizeY];
+
+        lines.remove(0);
+        // check format
+        if (sizeX != lines.size()) {
+            throw new RuntimeException("The file is improperly formatted");
+        }
+        lines.forEach(line -> {
+            String[] cells = line.split(" ");
+            if (cells.length != sizeY) {
+                throw new RuntimeException("The file is improperly formatted");
+            }
+        });
+
+        // fill the board
+        for (int x = 0; x < lines.size(); x++) {
+            String[] cells = lines.get(x).split(" ");
+
+            for (int y = 0; y < cells.length; y++) {
+                if (cells[y].equals("1")) {
+                    mineBoard[x][y] = true;
+                    mineNum++;
+                }
+            }
+        }
+
+        updateBoard();
+        checkRep();
     }
 
     /**
@@ -281,6 +336,7 @@ public class Board {
         checkRep();
         StringBuilder sb = new StringBuilder();
         sb.append("=====mineBoard=====\n");
+        sb.append("sizeX: ").append(sizeX).append(" sizeY: ").append(sizeY).append("\n");
         sb.append("mineNum: ").append(mineNum).append("\n");
         sb.append("mineNumBoard: \n");
         for (int i = 0; i < sizeX; i++) {
@@ -294,9 +350,11 @@ public class Board {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Board board = new Board(5, 10, Optional.empty());
         System.out.println(board.debugPrintAllInfo());
+        System.out.println(board);
+        board.dig(3, 4);
         System.out.println(board);
         board.flag(2, 3);
         board.flag(3, 3);
@@ -304,5 +362,8 @@ public class Board {
         board.deflag(2, 3);
         System.out.println(board);
         System.out.println(board.debugPrintAllInfo());
+
+        Board board1 = new Board(new File("./ps4/test/3x4Board.txt"));
+        System.out.println(board1.debugPrintAllInfo());
     }
 }

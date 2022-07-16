@@ -10,7 +10,8 @@ import org.junit.Test;
  */
 public class BoardTest {
 
-    // TODO: Testing strategy
+    // Testing strategy
+    //
 
     @Test(expected = AssertionError.class)
     public void testAssertionsEnabled() {
