@@ -15,3 +15,5 @@ Use `ExecutorService` as a thread pool.
 > design a data structure for Minesweeper.
 
 According to [Board.java](./src/minesweeper/Board.java) first comment inside the class.
+
+NOTE: X, Y is reversed for some reason.

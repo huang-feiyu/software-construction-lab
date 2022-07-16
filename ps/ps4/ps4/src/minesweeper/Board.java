@@ -29,10 +29,10 @@ public class Board {
     private static final char FLAGGED = 'F';
     private static final char TOUCHED = ' ';
 
-    // board: ySize * xSize cells
+    // board: sizeY * sizeX cells (NOTE: x,y is reversed; need a process before applying to public method)
     private final int sizeX;
     private final int sizeY;
-    private final int mineNum;
+    private int mineNum;
 
     private final char[][] board; // sent to client, update when changed
     private final boolean[][] mineBoard; // is there a bomb
@@ -68,7 +68,6 @@ public class Board {
         mineNumBoard = new int[sizeX][sizeY];
 
         initRandomBoard();
-        calculateBoard();
         updateBoard();
 
         checkRep();
@@ -109,6 +108,29 @@ public class Board {
     }
 
     /**
+     * Update <code>board</code> according to other 2D arrays.
+     */
+    private void updateBoard() {
+        checkRep();
+        calculateBoard();
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                if (flaggedBoard[i][j]) {
+                    board[i][j] = FLAGGED;
+                } else if (untouchedBoard[i][j]) {
+                    board[i][j] = UNTOUCHED;
+                } else if (mineNumBoard[i][j] > 0) {
+                    board[i][j] = (char) (mineNumBoard[i][j] + '0');
+                } else {
+                    // a BOMB or a non-mined cell
+                    board[i][j] = TOUCHED;
+                }
+            }
+        }
+        checkRep();
+    }
+
+    /**
      * Calculate the number of mines in the 8 neighbors of a cell, and store it
      * in <code>mineNumBoard</code>.
      */
@@ -135,31 +157,9 @@ public class Board {
     }
 
     /**
-     * Update <code>board</code> according to other 2D arrays.
-     */
-    private void updateBoard() {
-        checkRep();
-        for (int i = 0; i < sizeX; i++) {
-            for (int j = 0; j < sizeY; j++) {
-                if (flaggedBoard[i][j]) {
-                    board[i][j] = FLAGGED;
-                } else if (untouchedBoard[i][j]) {
-                    board[i][j] = UNTOUCHED;
-                } else if (mineNumBoard[i][j] > 0) {
-                    board[i][j] = (char) (mineNumBoard[i][j] + '0');
-                } else {
-                    // a BOMB or a non-mined cell
-                    board[i][j] = TOUCHED;
-                }
-            }
-        }
-        checkRep();
-    }
-
-    /**
      * Dig a cell:
-     * * cell is untouched, then open it;
-     * * cell is a mine, then game over;
+     * * cell is untouched, then open it (and its neighbors);
+     * * cell is a mine, then remove the mine, game over;
      * * otherwise, do not change anything.
      *
      * @return true if the game is over, false otherwise.
@@ -172,12 +172,14 @@ public class Board {
         }
         if (untouchedBoard[x][y]) {
             if (mineBoard[x][y]) {
+                mineNum--;
+                mineBoard[x][y] = false;
+                updateBoard();
                 // game over
                 return true;
             } else {
                 // open the cell
                 open(x, y);
-                calculateBoard();
                 updateBoard();
             }
         }
@@ -203,14 +205,51 @@ public class Board {
             return;
         }
 
-        for (int i = y - 1; i < y + 1; i++) {
-            for (int j = x - 1; j < x + 1; j++) {
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
                 if (validateCoordinate(i, j) && untouchedBoard[i][j] && !mineBoard[i][j]) {
                     open(i, j);
                 }
             }
         }
     }
+
+    /**
+     * Flag a cell:
+     * * cell is untouched, then flag it;
+     * * otherwise, do not change anything.
+     */
+    public void flag(int x, int y) {
+        checkRep();
+        if (!validateCoordinate(x, y)) {
+            // NOTE: should do nothing
+            throw new IllegalArgumentException("Invalid coordinate.");
+        }
+        if (untouchedBoard[x][y]) {
+            flaggedBoard[x][y] = true;
+            updateBoard();
+        }
+        checkRep();
+    }
+
+    /**
+     * Deflag a cell:
+     * * cell is flagged, then deflag it;
+     * * otherwise, do not change anything.
+     */
+    public void deflag(int x, int y) {
+        checkRep();
+        if (!validateCoordinate(x, y)) {
+            // NOTE: should do nothing
+            throw new IllegalArgumentException("Invalid coordinate.");
+        }
+        if (flaggedBoard[x][y]) {
+            flaggedBoard[x][y] = false;
+            updateBoard();
+        }
+        checkRep();
+    }
+
 
     /**
      * Validate (x,y) coordinate.
@@ -256,10 +295,14 @@ public class Board {
     }
 
     public static void main(String[] args) {
-        Board board = new Board(5, 4, Optional.empty());
+        Board board = new Board(5, 10, Optional.empty());
         System.out.println(board.debugPrintAllInfo());
         System.out.println(board);
-        board.dig(0, 0);
+        board.flag(2, 3);
+        board.flag(3, 3);
         System.out.println(board);
+        board.deflag(2, 3);
+        System.out.println(board);
+        System.out.println(board.debugPrintAllInfo());
     }
 }
